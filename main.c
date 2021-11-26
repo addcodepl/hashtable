@@ -2,35 +2,19 @@
 #include <string.h>
 #include <malloc.h>
 
+#include "hash.h"
+#include "hashtable.h"
+
 #define HASHTABLE_SIZE 10
 
-unsigned int hash(char *);
 
-struct ht_entry {
-    char* key;
-    char* value;
-};
 
-struct ht {
-    unsigned int size;
-    struct ht_entry** entries;
-};
-
-unsigned int hash(char* buf) {
-    unsigned int value = 0;
-
-    for(int i = 0; i < strlen(buf); i++) {
-        value += (int) buf[i];
-    }
-
-    return value;
-}
-
-struct ht* hashtable_create() {
+struct ht* hashtable_create(unsigned int(*hash_function)(char *)) {
     struct ht* hashtable = malloc(sizeof (struct ht) * 1);
 
     hashtable->entries = malloc(sizeof (struct ht_entry) * HASHTABLE_SIZE);
     hashtable->size = HASHTABLE_SIZE;
+    hashtable->hash = hash_function;
 
     for(int i = 0; i < HASHTABLE_SIZE; i++) {
         hashtable->entries[i] = NULL;
@@ -51,7 +35,7 @@ struct ht_entry* hashtable_add_entry(char* key, char* value) {
 }
 
 int hashtable_set(struct ht* hashtable, char* key, char* value) {
-    unsigned int offset = hash(key) % HASHTABLE_SIZE;
+    unsigned int offset = hashtable->hash(key) % HASHTABLE_SIZE;
     struct ht_entry* entry = hashtable->entries[offset];
 
     if (entry == NULL) {
@@ -75,7 +59,7 @@ void hashtable_show(struct ht* hashtable) {
 }
 
 int main() {
-    struct ht* table = hashtable_create();
+    struct ht* table = hashtable_create(naive_hash);
     hashtable_set(table, "a", "value of A");
     hashtable_set(table, "b", "value of B");
     hashtable_set(table, "b", "value of B with collision");
