@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "hash.h"
 #include "hashtable.h"
 
@@ -9,6 +10,14 @@ int main() {
     hashtable_set(table, "b", "value of B with collision");
     hashtable_set(table, "c", "value of C");
     hashtable_show(table);
+
+    if(hashtable_contains(table, "c")) {
+        printf("c is in hashtable\n");
+    }
+
+    if(!hashtable_contains(table, "d")) {
+        printf("d isn't in hashtable\n");
+    }
 
     return 0;
 }
