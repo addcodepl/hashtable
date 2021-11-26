@@ -12,4 +12,9 @@ struct ht {
     unsigned int (*hash)(char *);
 };
 
+struct ht* hashtable_create(unsigned int(*)(char *));
+struct ht_entry* hashtable_add_entry(char*, char*);
+int hashtable_set(struct ht*, char*, char*);
+void hashtable_show(struct ht*);
+
 #endif //HASHTABLE_HASHTABLE_H
