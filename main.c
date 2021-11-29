@@ -19,5 +19,7 @@ int main() {
         printf("d isn't in hashtable\n");
     }
 
+    printf("Get value for key [c] is equal: [%s]", hashtable_get(table, "c"));
+
     return 0;
 }

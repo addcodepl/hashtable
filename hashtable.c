@@ -52,6 +52,14 @@ int hashtable_contains(struct ht* hashtable, char* key) {
     return 1;
 }
 
+char* hashtable_get(struct ht* hashtable, char* key) {
+    if(hashtable_contains(hashtable, key)) {
+        unsigned int offset = hashtable->hash(key) % hashtable->size;
+        return hashtable->entries[offset]->value;
+    }
+    return NULL;
+}
+
 void hashtable_show(struct ht* hashtable) {
     for(int i = 0; i < 10; i++) {
         struct ht_entry* entry = hashtable->entries[i];

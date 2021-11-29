@@ -16,6 +16,7 @@ struct ht* hashtable_create(unsigned int(*)(char *));
 struct ht_entry* hashtable_add_entry(char*, char*);
 int hashtable_set(struct ht*, char*, char*);
 int hashtable_contains(struct ht*, char*);
+char* hashtable_get(struct ht*, char*);
 void hashtable_show(struct ht*);
 
 #endif //HASHTABLE_HASHTABLE_H
